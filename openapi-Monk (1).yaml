@@ -1,0 +1,254 @@
+#Vamos adaptar o código YAML para criar uma API de cadastro e pesquisa de animais perdidos, com endpoints que permitem operações CRUD (Create, Read, Update, Delete) e filtros por idade, raça, cidade e nome.
+#
+
+openapi: 3.0.0
+info:
+  title: API de Cadastro e Pesquisa de Animais Perdidos
+  description: Uma API para gerenciar o cadastro e a pesquisa de animais perdidos, permitindo filtrar por idade, raça, cidade e nome.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080/api
+    description: Servidor local de desenvolvimento
+
+paths:
+  /animais:
+    get:
+      summary: Lista todos os animais perdidos  # Read (GET)
+      parameters:
+        - name: nome
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Filtra animais pelo nome
+        - name: idade
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Filtra animais pela idade
+        - name: raca
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Filtra animais pela raça
+        - name: cidade
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Filtra animais pela cidade onde foram perdidos
+      responses:
+        '200':
+          description: Lista de animais perdidos retornada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Animal'
+              examples:
+                sucesso:
+                  summary: Exemplo de sucesso
+                  value:
+                    - id: 1
+                      nome: "Rex"
+                      idade: 5
+                      raca: "Labrador"
+                      cidade: "São Paulo"
+                      descricao: "Cachorro grande e amigável, perdido na região central de São Paulo"
+                      data_perdido: "2024-08-01"
+                    - id: 2
+                      nome: "Mia"
+                      idade: 2
+                      raca: "Siamês"
+                      cidade: "Rio de Janeiro"
+                      descricao: "Gata pequena e tímida, perdida no centro do Rio de Janeiro"
+                      data_perdido: "2024-08-10"
+
+    post:
+      summary: Cadastra um novo animal perdido  # Create (POST)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Animal'
+      responses:
+        '201':
+          description: Animal cadastrado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Animal'
+              examples:
+                sucesso:
+                  summary: Exemplo de animal cadastrado
+                  value:
+                    id: 3
+                    nome: "Bolt"
+                    idade: 3
+                    raca: "Pastor Alemão"
+                    cidade: "Belo Horizonte"
+                    descricao: "Cachorro enérgico, perdido em Belo Horizonte"
+                    data_perdido: "2024-08-12"
+
+  /animais/{id}:
+    get:
+      summary: Retorna os detalhes de um animal específico  # Read (GET)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID do animal
+      responses:
+        '200':
+          description: Detalhes do animal retornados com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Animal'
+              examples:
+                sucesso:
+                  summary: Exemplo de detalhe de animal
+                  value:
+                    id: 1
+                    nome: "Rex"
+                    idade: 5
+                    raca: "Labrador"
+                    cidade: "São Paulo"
+                    descricao: "Cachorro grande e amigável, perdido na região central de São Paulo"
+                    data_perdido: "2024-08-01"
+        '404':
+          description: Animal não encontrado
+          content:
+            application/json:
+              examples:
+                erro:
+                  summary: Exemplo de erro
+                  value:
+                    message: "Animal não encontrado"
+
+    put:
+      summary: Atualiza as informações de um animal perdido  # Update (PUT)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID do animal
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Animal'
+      responses:
+        '200':
+          description: Animal atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Animal'
+              examples:
+                sucesso:
+                  summary: Exemplo de atualização de animal
+                  value:
+                    id: 1
+                    nome: "Rex"
+                    idade: 6
+                    raca: "Labrador"
+                    cidade: "São Paulo"
+                    descricao: "Cachorro grande e amigável, agora com 6 anos"
+                    data_perdido: "2024-08-01"
+        '404':
+          description: Animal não encontrado
+          content:
+            application/json:
+              examples:
+                erro:
+                  summary: Exemplo de erro
+                  value:
+                    message: "Animal não encontrado"
+
+    delete:
+      summary: Remove um animal perdido do cadastro  # Delete (DELETE)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID do animal
+      responses:
+        '204':
+          description: Animal removido com sucesso
+        '404':
+          description: Animal não encontrado
+          content:
+            application/json:
+              examples:
+                erro:
+                  summary: Exemplo de erro
+                  value:
+                    message: "Animal não encontrado"
+
+components:
+  schemas:
+    Animal:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        nome:
+          type: string
+          example: "Rex"
+        idade:
+          type: integer
+          example: 5
+        raca:
+          type: string
+          example: "Labrador"
+        cidade:
+          type: string
+          example: "São Paulo"
+        descricao:
+          type: string
+          example: "Cachorro grande e amigável, perdido na região central de São Paulo"
+        data_perdido:
+          type: string
+          format: date
+          example: "2024-08-01"
+
+
+
+# Explicação das Funcionalidades
+
+# Create (POST /animais): Cadastra um novo animal perdido no sistema - Utiliza o método POST.
+
+# Read (GET /animais, GET /animais/{id}): GET /animais: Lista todos os animais perdidos, com opções de filtro por nome, idade, raça e cidade.--- GET /animais/{id}: Retorna os detalhes de um animal específico, utilizando seu ID.---Utiliza o método GET.
+
+# Update (PUT /animais/{id}): Atualiza as informações de um animal perdido   ---Utiliza o método PUT.
+
+# Delete (DELETE /animais/{id}): Remove um animal perdido do cadastro.---Utiliza o método DELETE.
+
+#--------------------------------------------------------------------------------
+# Filtros > Os filtros permitem que você busque animais perdidos com base em parâmetros específicos como nome, idade, raça e cidade. Esses filtros são passados como parâmetros de consulta (query parameters) no endpoint GET /animais.
+
+# Schema do Objeto Animal, O schema define a estrutura do objeto Animal, que inclui:
+
+# id: Identificador único do animal.
+# nome: Nome do animal.
+# idade: Idade do animal.
+# raca: Raça do animal.
+# cidade: Cidade onde o animal foi perdido.
+# descricao: Descrição adicional sobre o animal.
+# data_perdido: Data em que o animal foi perdido.
+
+# Esse código YAML pode ser usado como base para documentar uma API que gerencia o cadastro e a pesquisa de animais perdidos, com operações CRUD completas e suporte a filtros para facilitar a busca. #
