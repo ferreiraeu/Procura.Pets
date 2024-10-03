@@ -23,8 +23,5 @@ jobs:
 
       - name: Instalar dependências
         run: |
-          pip install -r requirements.txt  # Altere conforme necessário
-
-      - name: Executar testes
-        run: |
-          pytest  # Ou o comando que você usa para rodar seus testes
+          pip install -r requirements.txt
+          pytest
