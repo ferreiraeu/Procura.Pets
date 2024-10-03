@@ -4,6 +4,9 @@ on:
   pull_request:
     branches:
       - main  # Ou o branch que você deseja proteger
+  push:
+    branches:
+      - main  # Ou o branch que você deseja proteger
 
 jobs:
   test:
