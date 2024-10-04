@@ -3,10 +3,10 @@ name: Teste antes do Merge
 on:
   pull_request:
     branches:
-      - main  # Ou o branch que você deseja proteger
+      - main 
   push:
     branches:
-      - main  # Ou o branch que você deseja proteger
+      - main  
 
 jobs:
   test:
@@ -19,7 +19,7 @@ jobs:
       - name: Configurar Python (ou outra linguagem)
         uses: actions/setup-python@v2
         with:
-          python-version: '3.8'  # Altere para a versão que você usa
+          python-version: '3.8'
 
       - name: Instalar dependências
         run: |
