@@ -1,2 +1,39 @@
-_pycache_/
-_pytest_cache_/
+# Python cache files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+venv/
+ENV/
+env/
+
+# Test and coverage
+pytest_cache/
+*.cover
+*.egg-info/
+.tox/
+.coverage
+
+# Configurações do GitHub
+.github/
+
+# Arquivos de configuração do pacote
+package.json
+package-lock.json
+
+# Arquivos de configuração do Flask
+*.db
+*.sqlite3
+
+# Arquivos de log
+*.log
+
+# Arquivos temporários
+*.tmp
+*.temp
+tempoCodeRunerFile.py
+
+# Outros arquivos que você não deseja rastrear
+deploymente.yaml
+openapi.yaml

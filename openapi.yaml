@@ -8,8 +8,8 @@ info:
   version: 1.0.0
 
 servers:
-  - url: http://localhost:8080/api
-    description: Servidor local de desenvolvimento
+  - url: http://127.0.0.1:5000
+    description: Banco de dados local
 
 paths:
   /animais:

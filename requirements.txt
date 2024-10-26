@@ -4,3 +4,4 @@ NumPy==1.24.4
 pytest==7.4.0
 SQLAlchemy==2.0.18
 Flask-SQLAlchemy
+PyMySQL==1.0.2
