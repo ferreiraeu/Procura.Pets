@@ -5,10 +5,7 @@ from models import db, Animal
 from database import init_db
 from datetime import datetime
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://rogerio:@ml}CO%ink=p!vgh@34.79.51.239:3306/rogerio_schema'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+
 
 
 # Inicializa o banco de dados na criação do contexto da aplicação
