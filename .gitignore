@@ -34,7 +34,7 @@ package-lock.json
 # Arquivos temporários
 *.tmp
 *.temp
-tempoCodeRunerFile.py
+tempCodeRunnerFile.py
 
 # Outros arquivos que você não deseja rastrear
 deploymente.yaml
